@@ -1,25 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MomentUtils from '@date-io/moment';
+import { Router } from 'react-router-dom';
+import { Provider as StoreProvider } from 'react-redux';
+import { ThemeProvider } from '@material-ui/styles';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { renderRoutes } from 'react-router-config';
+import {
+  ScrollReset,
+  GoogleAnalytics,
+  CookiesNotification
+} from './components';
+
+import theme from './theme';
+
+
+import  configureStore  from './store/store';
+
+
+const store = configureStore();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StoreProvider store={store}>
+      <ThemeProvider theme={theme}>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <Router>
+            <ScrollReset />
+            <GoogleAnalytics />
+            <CookiesNotification />
+            {renderRoutes(routes)}
+          </Router>
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
+    </StoreProvider>
   );
 }
 
