@@ -1,6 +1,6 @@
 import React from 'react';
 import MomentUtils from '@date-io/moment';
-import { Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider as StoreProvider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -12,6 +12,7 @@ import {
 } from './components';
 
 import theme from './theme';
+import routes from './routes';
 
 
 import  configureStore  from './store/store';
