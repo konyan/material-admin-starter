@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Button, TextField } from '@material-ui/core';
 
 import useRouter from 'utils/useRouter';
-import { login } from '../../../../store/user/action';
+import { ToastContext } from '../../../../context/ToastContext';
 
 const schema = {
   email: {
@@ -39,6 +39,8 @@ const useStyles = makeStyles(theme => ({
 const LoginForm = props => {
   const { className, ...rest } = props;
 
+  const toast = useContext(ToastContext);
+
   const classes = useStyles();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -51,7 +53,11 @@ const LoginForm = props => {
   });
 
   useEffect(() => {
-    
+    setFormState(formState => ({
+      ...formState,
+      isValid: true,
+      errors: {}
+    }));
   }, [formState.values]);
 
   const handleChange = event => {
@@ -75,7 +81,7 @@ const LoginForm = props => {
 
   const handleSubmit = async event => {
     event.preventDefault();
-    // dispatch(login());
+    toast.addToast('TEsting toast', 'error');
     router.history.push('/');
   };
 
@@ -86,8 +92,7 @@ const LoginForm = props => {
     <form
       {...rest}
       className={clsx(classes.root, className)}
-      onSubmit={handleSubmit}
-    >
+      onSubmit={handleSubmit}>
       <div className={classes.fields}>
         <TextField
           error={hasError('email')}
@@ -119,8 +124,7 @@ const LoginForm = props => {
         disabled={!formState.isValid}
         size="large"
         type="submit"
-        variant="contained"
-      >
+        variant="contained">
         Sign in
       </Button>
     </form>

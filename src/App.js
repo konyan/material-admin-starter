@@ -11,8 +11,13 @@ import {
   CookiesNotification
 } from './components';
 
+import { SnackbarProvider } from 'notistack';
+
+import {SnackBarProvider} from './context/ToastContext';
+
 import theme from './theme';
 import routes from './routes';
+import Alert from './components/Alert';
 
 
 import  configureStore  from './store/store';
@@ -24,14 +29,24 @@ function App() {
   return (
     <StoreProvider store={store}>
       <ThemeProvider theme={theme}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <Router>
-            <ScrollReset />
-            <GoogleAnalytics />
-            <CookiesNotification />
-            {renderRoutes(routes)}
-          </Router>
-        </MuiPickersUtilsProvider>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          maxSnack={3}
+        >
+          <SnackBarProvider>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <Router>
+                <ScrollReset />
+                <GoogleAnalytics />
+                <CookiesNotification />
+                {renderRoutes(routes)}
+              </Router>
+            </MuiPickersUtilsProvider>
+          </SnackBarProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </StoreProvider>
   );

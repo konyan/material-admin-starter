@@ -6,6 +6,10 @@ export { default as Label } from './Label';
 export { default as Page } from './Page';
 export { default as Navigation } from './Navigation';
 export { default as NotificationsPopover } from './NotificationsPopover';
+export { default as SlideDown } from './SlideDown';
+export { default as Alert } from './Alert';
+
+
 
 
 
